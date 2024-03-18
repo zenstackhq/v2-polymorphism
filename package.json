@@ -3,7 +3,8 @@
     "license": "MIT",
     "scripts": {
         "generate": "npx zenstack generate && npx prisma db push",
-        "dev": "ts-node ./script.ts"
+        "dev": "ts-node ./script.ts",
+        "up": "rm package-lock.json && npm i"
     },
     "dependencies": {
         "@prisma/client": "5.9.1",
