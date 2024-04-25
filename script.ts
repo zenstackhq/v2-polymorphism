@@ -19,16 +19,12 @@ async function main() {
     );
 
     const post = await db.post.create({
-        data: { owner: { connect: { id: user.id } }, title: 'Post1' },
+        data: { title: 'Post1' },
     });
     console.log('Post created:', inspect(post));
 
     const video = await db.video.create({
-        data: {
-            owner: { connect: { id: user.id } },
-            name: 'Video1',
-            duration: 100,
-        },
+        data: { name: 'Video1', duration: 100 },
     });
     console.log('Video created:', inspect(video));
 

@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id       Int       @id @default(autoincrement())
   contents Content[]
 
   @@allow('create,read', true)
@@ -16,12 +16,12 @@ model User {
 }
 
 model Content {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  ownerId Int
-  published Boolean @default(false)
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId     Int      @default(auth().id)
+  published   Boolean  @default(false)
   contentType String
 
   @@delegate(contentType)
@@ -35,6 +35,6 @@ model Post extends Content {
 }
 
 model Video extends Content {
-  name String
+  name     String
   duration Int
 }

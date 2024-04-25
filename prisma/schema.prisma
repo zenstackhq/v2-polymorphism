@@ -4,49 +4,49 @@
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 datasource db {
-    provider = "sqlite"
-    url = "file:./dev.db"
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 /// @@allow('create,read', true)
 /// @@allow('all', auth() == this)
 model User {
-    id Int @id() @default(autoincrement())
-    contents Content[]
+  id       Int       @id() @default(autoincrement())
+  contents Content[]
 }
 
 /// @@delegate(contentType)
 /// @@allow('read', published)
 /// @@allow('all', auth() == owner)
 model Content {
-    id Int @id() @default(autoincrement())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
-    owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-    ownerId Int
-    published Boolean @default(false)
-    contentType String
-    delegate_aux_post Post?
-    delegate_aux_video Video?
+  id                 Int      @id() @default(autoincrement())
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt()
+  owner              User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId            Int
+  published          Boolean  @default(false)
+  contentType        String
+  delegate_aux_post  Post?
+  delegate_aux_video Video?
 }
 
 /// @@allow('read', published)
 /// @@allow('all', auth() == owner)
 model Post {
-    id Int @id()
-    title String
-    delegate_aux_content Content @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id                   Int     @id()
+  title                String
+  delegate_aux_content Content @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 /// @@allow('read', published)
 /// @@allow('all', auth() == owner)
 model Video {
-    id Int @id()
-    name String
-    duration Int
-    delegate_aux_content Content @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id                   Int     @id()
+  name                 String
+  duration             Int
+  delegate_aux_content Content @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
